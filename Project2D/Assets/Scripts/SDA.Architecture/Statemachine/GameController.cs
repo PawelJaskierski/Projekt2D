@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using SDA.UI;
 using SDA.Input;
+using SDA.Generation;
 
 namespace SDA.Architecture{
     public class GameController : MonoBehaviour
     {
         [SerializeField] private GameView gameView;
         [SerializeField] private MenuView menuView;
+
+        [SerializeField] private LevelGenerator levelGenerator;
         private InputSystem inputSystem;
 
         private MenuState menuState;
@@ -23,7 +26,7 @@ namespace SDA.Architecture{
             inputSystem = new InputSystem();
             transitionToGameState = () => ChangeState(gameState);
             menuState = new MenuState(transitionToGameState,menuView);
-            gameState = new GameState(gameView, inputSystem);
+            gameState = new GameState(gameView, inputSystem, levelGenerator);
             ChangeState(menuState);
         }
 

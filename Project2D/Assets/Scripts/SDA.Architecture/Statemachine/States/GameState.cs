@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SDA.Input;
 using UnityEngine;
 using SDA.UI;
+using SDA.Generation;
 
 namespace SDA.Architecture
 {
@@ -11,17 +12,21 @@ namespace SDA.Architecture
         private GameView gameView;
         private InputSystem inputSystem;
 
-        public GameState(GameView gameView, InputSystem inputSystem)
+        private LevelGenerator levelGenerator;
+
+        public GameState(GameView gameView, InputSystem inputSystem, LevelGenerator levelGenerator)
         {
             this.gameView = gameView;
             this.inputSystem = inputSystem;
+            this.levelGenerator = levelGenerator;
         }
 
         public override void InitState()
         {
             if(gameView!=null)
                 gameView.ShowView();
-            
+            levelGenerator.SpawnShield();
+            levelGenerator.SpawnKnife();
             inputSystem.AddListener(PrintDebug);
         }
 
