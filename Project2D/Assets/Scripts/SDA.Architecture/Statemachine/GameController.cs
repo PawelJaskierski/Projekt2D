@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using SDA.UI;
 using SDA.Input;
 using SDA.Generation;
+using SDA.CoreGameplay;
 
 namespace SDA.Architecture{
     public class GameController : MonoBehaviour
@@ -14,6 +15,8 @@ namespace SDA.Architecture{
 
         [SerializeField] private LevelGenerator levelGenerator;
         private InputSystem inputSystem;
+
+        private ShieldMovementController shieldMovementController;
 
         private MenuState menuState;
         private GameState gameState;
@@ -25,8 +28,9 @@ namespace SDA.Architecture{
         {
             inputSystem = new InputSystem();
             transitionToGameState = () => ChangeState(gameState);
+            shieldMovementController = new ShieldMovementController();
             menuState = new MenuState(transitionToGameState,menuView);
-            gameState = new GameState(gameView, inputSystem, levelGenerator);
+            gameState = new GameState(gameView, inputSystem, levelGenerator, shieldMovementController);
             ChangeState(menuState);
         }
 

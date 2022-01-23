@@ -4,6 +4,7 @@ using SDA.Input;
 using UnityEngine;
 using SDA.UI;
 using SDA.Generation;
+using SDA.CoreGameplay;
 
 namespace SDA.Architecture
 {
@@ -13,26 +14,31 @@ namespace SDA.Architecture
         private InputSystem inputSystem;
 
         private LevelGenerator levelGenerator;
+        private ShieldMovementController shieldMovementController;
+        
 
-        public GameState(GameView gameView, InputSystem inputSystem, LevelGenerator levelGenerator)
+        public GameState(GameView gameView, InputSystem inputSystem, LevelGenerator levelGenerator, ShieldMovementController shieldMovementController)
         {
             this.gameView = gameView;
             this.inputSystem = inputSystem;
             this.levelGenerator = levelGenerator;
+            this.shieldMovementController = shieldMovementController;
         }
 
         public override void InitState()
         {
             if(gameView!=null)
                 gameView.ShowView();
-            levelGenerator.SpawnShield();
+            BaseShield startShield = levelGenerator.SpawnShield();
             levelGenerator.SpawnKnife();
             inputSystem.AddListener(PrintDebug);
+            shieldMovementController.InitializeShield(startShield);
         }
 
         public override void UpdateState()
         {
             inputSystem.UpdateSystem();
+            shieldMovementController.UpdateSystem();
         }
 
         public override void DestroyState()

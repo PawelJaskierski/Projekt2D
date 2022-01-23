@@ -1,19 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace SDA.Generation{
     public abstract class BaseShield : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
+        [SerializeField]
+        protected ShieldMovementStep[] steps;
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
+        public abstract void Rotate();
+        public abstract void Initialize();
     }
 }
